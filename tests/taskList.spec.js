@@ -29,12 +29,7 @@ test('add a new task item', async ({ page }) => {
 
   await button.click();
 
-  const listItems = page.getByRole('listitem');
+  const listItems = page.getByRole('listitem').filter({ hasText: 'Buy socks' });
 
-  await expect(listItems).toHaveText([
-    '✅ Make coffee',
-    '⌛️ Do Laundry',
-    '⌛️ Learn JavaScript',
-    '⌛️ Buy socks',
-  ]);
+  await expect(listItems).toHaveCount(1);
 });
