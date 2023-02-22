@@ -29,5 +29,12 @@ test('add a new task item', async ({ page }) => {
 
   await button.click();
 
-  // TODO: Write an assertion that the task list now contains our new task
+  const listItems = page.getByRole('listitem');
+
+  await expect(listItems).toHaveText([
+    '✅ Make coffee',
+    '⌛️ Do Laundry',
+    '⌛️ Learn JavaScript',
+    '⌛️ Buy socks',
+  ]);
 });
