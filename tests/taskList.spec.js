@@ -37,11 +37,25 @@ test('add a new task item', async ({ page }) => {
 test('mark an item as done', async ({ page }) => {
   await page.goto('http://localhost:3000/');
 
-  const listItems = page
-    .getByRole('listitem')
-    .filter({ hasText: 'Learn JavaScript' });
+  const listItems = page.getByRole('listitem');
 
-  await listItems.click();
+  const beforeList = [];
 
-  await expect(listItems).toHaveText('✅ Learn JavaScript');
+  for (const li of await listItems.all()) {
+    const text = await li.innerText();
+    beforeList.push(text);
+  }
+
+  expect(beforeList).toEqual([
+    '✅ Make coffee',
+    '⌛️ Do Laundry',
+    '⌛️ Learn JavaScript',
+  ]);
+
+  const incompleteItems = page.getByText('⌛️');
+  while ((await incompleteItems.count()) > 0) {
+    await incompleteItems.first().click();
+  }
+
+  await expect(page.getByText('✅')).toHaveCount(beforeList.length);
 });
