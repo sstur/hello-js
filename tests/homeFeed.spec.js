@@ -9,9 +9,7 @@ test('home feed loads', async ({ page }) => {
   await expect(headerTitle).toBeVisible();
 });
 
-test('clicking create post (plus button) will navigate to login', async ({
-  page,
-}) => {
+test('navigate to login page, login', async ({ page }) => {
   await page.goto('https://90u6ms-3000.preview.csb.app/');
 
   const createPostButton = page
@@ -26,4 +24,9 @@ test('clicking create post (plus button) will navigate to login', async ({
 
   const welcomeHeader = page.getByText('Welcome to Chirper');
   await expect(welcomeHeader).toBeVisible();
+
+  // TODO:
+  // - Fill the login form fields
+  // - Submit the login
+  // - Assert that we have been navigated back to the home screen
 });
