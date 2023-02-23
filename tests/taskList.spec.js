@@ -45,3 +45,17 @@ test('mark an item as done', async ({ page }) => {
 
   await expect(listItems).toHaveText('✅ Learn JavaScript');
 });
+
+test('adding an item, marking it as done, then changing to not done', async ({
+  page,
+}) => {
+  // Task 59
+  // Assert the initial state
+  // Then create a new task
+  // Assert new task has been created in the "not done" state
+  // Assert the text input is now empty (it gets cleared after submit)
+  // Click to mark the task as done; assert that worked
+  // Click again to mark the task as not done; assert that worked
+  // Don't forget to setup your test (go to the correct page)
+  // To run your tests, use: npm run e2e
+});
