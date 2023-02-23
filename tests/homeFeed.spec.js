@@ -36,4 +36,21 @@ test('navigate to login page, login', async ({ page }) => {
     .filter({ has: page.locator('.icon-tabler-login') });
 
   await expect(loginButton).not.toBeVisible();
+
+  await createPostButton.click();
+
+  await expect(page).toHaveURL('https://90u6ms-3000.preview.csb.app/new');
+
+  const uniqueCode = Date.now().toString(36);
+  const examplePostContent = `Test post from Playwright (${uniqueCode})`;
+
+  page.getByPlaceholder("What's happening?").fill(examplePostContent);
+
+  page.getByRole('button', { name: 'Send' }).click();
+
+  await expect(page).toHaveURL('https://90u6ms-3000.preview.csb.app/');
+
+  const newlyCreatedPost = page.getByText(examplePostContent);
+
+  await expect(newlyCreatedPost).toBeVisible();
 });
