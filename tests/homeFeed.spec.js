@@ -25,8 +25,15 @@ test('navigate to login page, login', async ({ page }) => {
   const welcomeHeader = page.getByText('Welcome to Chirper');
   await expect(welcomeHeader).toBeVisible();
 
-  // TODO:
-  // - Fill the login form fields
-  // - Submit the login
-  // - Assert that we have been navigated back to the home screen
+  await page.getByLabel('Username').fill('oliviagreene');
+  await page.getByLabel('Password').fill('asdf');
+  await page.getByRole('button', { name: 'Login' }).click();
+
+  await expect(page).toHaveURL('https://90u6ms-3000.preview.csb.app/');
+
+  const loginButton = page
+    .getByRole('button')
+    .filter({ has: page.locator('.icon-tabler-login') });
+
+  await expect(loginButton).not.toBeVisible();
 });
