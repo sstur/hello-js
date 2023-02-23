@@ -58,4 +58,29 @@ test('adding an item, marking it as done, then changing to not done', async ({
   // Click again to mark the task as not done; assert that worked
   // Don't forget to setup your test (go to the correct page)
   // To run your tests, use: npm run e2e
+  await page.goto('http://localhost:3000/');
+
+  const listItems = page.getByRole('listitem');
+  await expect(listItems).toHaveCount(3);
+
+  // Add new item
+  const textInput = page.getByPlaceholder('Enter a task');
+  await textInput.fill('Buy socks');
+  await textInput.press('Enter');
+  await expect(listItems).toHaveCount(4);
+
+  // Assert the item exists
+  const newItem = page.getByText('Buy socks');
+  await expect(newItem).toContainText('⌛️');
+
+  // Assert the text input was cleared after submitting
+  await expect(textInput).toHaveValue('');
+
+  // If the item is clicked, it gets flipped to done
+  newItem.click();
+  await expect(newItem).toContainText('✅');
+
+  // If the item is clicked again, it gets flipped back to not-done
+  newItem.click();
+  await expect(newItem).toContainText('⌛️');
 });
