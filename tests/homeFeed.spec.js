@@ -14,5 +14,16 @@ test('clicking create post (plus button) will navigate to login', async ({
 }) => {
   await page.goto('https://90u6ms-3000.preview.csb.app/');
 
-  // TODO: Locate the button, click it, assert that we have navigated to the /login page
+  const createPostButton = page
+    .getByRole('button')
+    .filter({ has: page.locator('.icon-tabler-plus') });
+
+  await expect(createPostButton).toHaveCount(1);
+
+  await createPostButton.click();
+
+  await expect(page).toHaveURL('https://90u6ms-3000.preview.csb.app/login');
+
+  const welcomeHeader = page.getByText('Welcome to Chirper');
+  await expect(welcomeHeader).toBeVisible();
 });
