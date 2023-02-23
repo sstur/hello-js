@@ -35,8 +35,13 @@ test('add a new task item', async ({ page }) => {
 });
 
 test('mark an item as done', async ({ page }) => {
-  // 1. Setup the test (go to the page); Remember you local dev server needs to be running.
-  // 2. Locate a thing on the page
-  // 3. Do an action, e.g. click the thing
-  // 4. Make an assertion; use expect() to assert that something is a certain way on the page
+  await page.goto('http://localhost:3000/');
+
+  const listItems = page
+    .getByRole('listitem')
+    .filter({ hasText: 'Learn JavaScript' });
+
+  await listItems.click();
+
+  await expect(listItems).toHaveText('✅ Learn JavaScript');
 });
